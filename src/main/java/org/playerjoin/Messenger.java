@@ -60,13 +60,17 @@ public class Messenger extends JavaPlugin {
             Universe.get().getPlayers().forEach(player -> {
                 Player p = refToPlayerComponent(player);
                 if (p != eventPlayer) {
-                    player.sendMessage(MessageFormatter.format("Player {player} joined for the first time"
+                    player.sendMessage(MessageFormatter.format("§bPlayer §f[§c{player}§f] joined for the first time"
                             .replace("{player}", eventPlayer.getDisplayName())));
                 } else {
-                    player.sendMessage(MessageFormatter.format("§f[§a+§f] {player}"));
+                    player.sendMessage(MessageFormatter.format("§f[§a+§f] {player}"
+                            .replace("{player}", eventPlayer.getDisplayName())));
                 }
             });
-            eventPlayer.sendMessage(MessageFormatter.format("§bWelcome to hytaleworld! Because its your first time we gave you something to start"));
+            eventPlayer.sendMessage(MessageFormatter.format("" +
+                    "§bWelcome to hytaleworld! Because its your first time we gave you something to start" +
+                    ""
+            ));
             new JoinKit(eventPlayer).grant();
         } else {
             Universe.get().getPlayers().forEach(player -> {
