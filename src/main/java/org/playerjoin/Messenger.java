@@ -88,8 +88,7 @@ public class Messenger extends JavaPlugin {
 
     public void onPlayerLeave(PlayerDisconnectEvent event) {
         Universe.get().getPlayers().forEach(player -> {
-            Player p = refToPlayerComponent(player);
-            p.sendMessage(MessageFormatter.format("§f[§4-§f] {player}"
+            player.sendMessage(MessageFormatter.format("§f[§4-§f] {player}"
                     .replace("{player}", event.getPlayerRef().getUsername())));
         });
     }
