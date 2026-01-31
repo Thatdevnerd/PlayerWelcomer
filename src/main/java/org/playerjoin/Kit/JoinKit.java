@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class JoinKit {
     private final Player player;
-    private final ItemStack[] items = new ItemStack[0];
     private final HashMap<String, Integer> defaultStack = new HashMap<>(Map.of(
             "Weapon_Sword_Crude", 1,
             "Tool_Pickaxe_Crude", 1,

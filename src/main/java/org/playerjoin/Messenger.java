@@ -18,6 +18,7 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.playerjoin.Kit.JoinKit;
+import org.playerjoin.Utils.MessageFormatter;
 
 import java.awt.*;
 import java.util.logging.Level;
@@ -57,21 +58,23 @@ public class Messenger extends JavaPlugin {
             Universe.get().getPlayers().forEach(player -> {
                 Player p = refToPlayerComponent(player);
                 if (p != eventPlayer) {
-                    player.sendMessage(Message.raw("Player {player} joined for the first time"
-                            .replace("{player}", event.getPlayer().getDisplayName())));
+                    player.sendMessage(MessageFormatter.format("Player {player} joined for the first time"
+                            .replace("{player}", eventPlayer.getDisplayName())));
+                } else {
+                    player.sendMessage(MessageFormatter.format("§f[§a+§f] {player}"));
                 }
             });
-            eventPlayer.sendMessage(Message.raw("Welcome to hytaleworld!").color(Color.CYAN));
+            eventPlayer.sendMessage(MessageFormatter.format("§bWelcome to hytaleworld! Because its your first time we gave you something to start"));
             new JoinKit(eventPlayer).grant();
         } else {
             Universe.get().getPlayers().forEach(player -> {
                 Player p = refToPlayerComponent(player);
-                if (p != eventPlayer) {
-                    player.sendMessage(Message.raw("Player {player} logged in"
-                            .replace("{player}", event.getPlayer().getDisplayName())));
+                if (p == eventPlayer) {
+                    player.sendMessage(MessageFormatter.format("§f[§a+§f] {player}".replace("{player}",
+                            eventPlayer.getDisplayName())));
                 }
             });
-            eventPlayer.sendMessage(Message.raw("Welcome back to hytale world").color(Color.gray));
+            eventPlayer.sendMessage(MessageFormatter.format("§bWelcome back to hytaleworld"));
         }
     }
 
