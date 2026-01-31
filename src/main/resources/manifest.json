@@ -1,0 +1,12 @@
+{
+  "Name": "PlayerMessenger",
+  "Group": "Paramorphix",
+  "Main": "org.playerjoin.Messenger",
+  "Version": "1.0.0",
+  "Description": "Lets you set up player join messages",
+  "Authors": [
+    {
+      "Name": "Paramorphix"
+    }
+  ]
+}
