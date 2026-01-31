@@ -9,6 +9,7 @@ import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
+import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -35,6 +36,7 @@ public class Messenger extends JavaPlugin {
     public void setup() {
         EventRegistry eventRegistry = getEventRegistry();
         eventRegistry.registerGlobal(PlayerReadyEvent.class, this::onPlayerJoin);
+        eventRegistry.registerGlobal(PlayerDisconnectEvent.class, this::onPlayerLeave);
         eventRegistry.registerGlobal(AddPlayerToWorldEvent.class, this::onPlayerJoinWorld);
     }
 
@@ -70,12 +72,19 @@ public class Messenger extends JavaPlugin {
             Universe.get().getPlayers().forEach(player -> {
                 Player p = refToPlayerComponent(player);
                 if (p == eventPlayer) {
-                    player.sendMessage(MessageFormatter.format("§f[§a+§f] {player}".replace("{player}",
-                            eventPlayer.getDisplayName())));
+                    player.sendMessage(MessageFormatter.format("§f[§a+§f] {player}"
+                            .replace("{player}", eventPlayer.getDisplayName())));
                 }
             });
             eventPlayer.sendMessage(MessageFormatter.format("§bWelcome back to hytaleworld"));
         }
+    }
+
+    public void onPlayerLeave(PlayerDisconnectEvent event) {
+        Universe.get().getPlayers().forEach(player -> {
+            Player p = refToPlayerComponent(player);
+            p.sendMessage(MessageFormatter.format("§f[§4-§f] {player}"));
+        });
     }
 
     public Player refToPlayerComponent(PlayerRef p) {
