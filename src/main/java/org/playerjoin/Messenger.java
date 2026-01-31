@@ -71,7 +71,7 @@ public class Messenger extends JavaPlugin {
         } else {
             Universe.get().getPlayers().forEach(player -> {
                 Player p = refToPlayerComponent(player);
-                if (p == eventPlayer) {
+                if (p != eventPlayer) {
                     player.sendMessage(MessageFormatter.format("§f[§a+§f] {player}"
                             .replace("{player}", eventPlayer.getDisplayName())));
                 }
@@ -88,7 +88,7 @@ public class Messenger extends JavaPlugin {
         });
     }
 
-    public Player refToPlayerComponent(PlayerRef p) {
+    private Player refToPlayerComponent(PlayerRef p) {
         Ref<EntityStore> pRef = p.getReference();
         Store<EntityStore> store = pRef.getStore();
         return store.getComponent(pRef, Player.getComponentType());
